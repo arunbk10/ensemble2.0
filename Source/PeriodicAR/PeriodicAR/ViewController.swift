@@ -13,13 +13,12 @@ import ARKit
 class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDelegate {
     
     @IBOutlet var sceneView: ARSCNView!
-    var arrayElements = ["A", "H", "C", "B"]
     var elementsArray: Array<City> = []
     
     var sessionConfiguration: ARWorldTrackingConfiguration = {
         let configuration = ARWorldTrackingConfiguration()
         configuration.planeDetection = .horizontal
-        configuration.worldAlignment = .gravityAndHeading
+        configuration.worldAlignment = .gravity
         return configuration
     }()
     
@@ -28,6 +27,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
         
         let scene = SCNScene()
         sceneView.scene = scene
+        sceneView.allowsCameraControl = true
         self.sceneView.autoenablesDefaultLighting = true
         self.sceneView.antialiasingMode = .multisampling4X
         sceneView.scene.physicsWorld.contactDelegate = self
@@ -45,8 +45,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
                     
                     for i in 0...(elements.count)-1 {
                         let element = elements[i]
-                        print(colorWithHexString(hex: element["color"] as! String))
-                        let city = City(name: element["name"] as! String, symbol: element["symbol"] as! String, color: colorWithHexString(hex: element["color"] as! String), xPosition: element["xpos"] as! CGFloat)
+                        let city = City(name: element["name"] as! String, symbol: element["symbol"] as! String, color: UIColor.red, xPosition: element["xpos"] as! CGFloat, yPosition: element["ypos"] as! CGFloat)
                         elementsArray.append(city)
                     }
                 }
@@ -57,6 +56,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
     }
     
     func createTable() {
+        
         for i in 0...(elementsArray.count - 1)  {
             let box = SCNBox(width: 1, height: 1, length: 0.01, chamferRadius: 0)
             let rectangleMaterial = SCNMaterial()
@@ -64,30 +64,19 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
             box.materials = [rectangleMaterial]
             let boxNode = SCNNode(geometry: box)
             //Fix me
-            boxNode.position = SCNVector3(elementsArray[i].xPosition,0,-5)
+            boxNode.position = SCNVector3(((elementsArray[i].xPosition)) ,elementsArray[i].yPosition,-20)
             boxNode.name = elementsArray[i].symbol
             sceneView.scene.rootNode.addChildNode(boxNode)
             
-            let textposition = SCNVector3Make(Float(i), 0,-1)
-            let textNode = addText(text: elementsArray[i].symbol, position: textposition,color: elementsArray[i].color)
-            let textMaterials = SCNMaterial()
-            textMaterials.diffuse.contents = textNode
-            box.materials = [textMaterials]
+            
+            let tag = SCNText(string: elementsArray[i].symbol, extrusionDepth: 0.1)
+            tag.firstMaterial?.diffuse.contents = UIColor.black
+            tag.font = UIFont(name: "Optima", size: 0.5)
+            let tagNode = SCNNode(geometry: tag)
+            tagNode.position =  SCNVector3Make((boxNode.position.x - Float((box.width/2) - 0.25)), boxNode.position.y - 0.25 - Float(box.height),boxNode.position.z)
+            self.sceneView.scene.rootNode.addChildNode(tagNode)
+
         }
-    }
-    
-    func addText(text: String, position: SCNVector3,color: UIColor)->SKScene {
-        let skScene = SKScene(size: CGSize(width: 200, height: 200))
-        skScene.backgroundColor = color
-        let labelNode = SKLabelNode(text: text)
-        labelNode.fontSize = 30
-        labelNode.color = UIColor.red
-        labelNode.fontColor = UIColor.red
-        labelNode.yScale = -1
-        labelNode.position = CGPoint(x:skScene.size.width/2,y:skScene.size.height/2)
-        skScene.addChild(labelNode)
-        
-        return skScene
     }
     
     override func viewDidAppear(_ animated: Bool) {

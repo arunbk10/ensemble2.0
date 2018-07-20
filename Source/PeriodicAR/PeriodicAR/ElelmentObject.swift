@@ -14,12 +14,14 @@ class City {
     var symbol: String
     var color: UIColor
     var xPosition: CGFloat = 0.0
+    var yPosition: CGFloat = 0.0
     
-    init(name: String, symbol: String, color: UIColor, xPosition: CGFloat) {
+    init(name: String, symbol: String, color: UIColor, xPosition: CGFloat, yPosition: CGFloat) {
         self.name = name
         self.symbol = symbol
         self.color = color
         self.xPosition = xPosition
+        self.yPosition = yPosition
     }
     
 }
