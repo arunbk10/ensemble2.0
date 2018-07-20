@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		14A6C6E521025C020009C6D8 /* ElementList.json in Resources */ = {isa = PBXBuildFile; fileRef = 14A6C6E421025C010009C6D8 /* ElementList.json */; };
+		14A6C6E721025FB80009C6D8 /* ElelmentObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14A6C6E621025FB80009C6D8 /* ElelmentObject.swift */; };
 		C4162F92210219960044023D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4162F91210219960044023D /* AppDelegate.swift */; };
 		C4162F94210219960044023D /* art.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = C4162F93210219960044023D /* art.scnassets */; };
 		C4162F96210219960044023D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4162F95210219960044023D /* ViewController.swift */; };
@@ -16,6 +18,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		14A6C6E421025C010009C6D8 /* ElementList.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = ElementList.json; sourceTree = "<group>"; };
+		14A6C6E621025FB80009C6D8 /* ElelmentObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElelmentObject.swift; sourceTree = "<group>"; };
 		C4162F8E210219960044023D /* PeriodicAR.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PeriodicAR.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C4162F91210219960044023D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C4162F93210219960044023D /* art.scnassets */ = {isa = PBXFileReference; lastKnownFileType = wrapper.scnassets; path = art.scnassets; sourceTree = "<group>"; };
@@ -57,6 +61,8 @@
 			isa = PBXGroup;
 			children = (
 				C4162F91210219960044023D /* AppDelegate.swift */,
+				14A6C6E621025FB80009C6D8 /* ElelmentObject.swift */,
+				14A6C6E421025C010009C6D8 /* ElementList.json */,
 				C4162F93210219960044023D /* art.scnassets */,
 				C4162F95210219960044023D /* ViewController.swift */,
 				C4162F97210219960044023D /* Main.storyboard */,
@@ -129,6 +135,7 @@
 				C4162F9E2102199A0044023D /* LaunchScreen.storyboard in Resources */,
 				C4162F9B2102199A0044023D /* Assets.xcassets in Resources */,
 				C4162F99210219960044023D /* Main.storyboard in Resources */,
+				14A6C6E521025C020009C6D8 /* ElementList.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -140,6 +147,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C4162F96210219960044023D /* ViewController.swift in Sources */,
+				14A6C6E721025FB80009C6D8 /* ElelmentObject.swift in Sources */,
 				C4162F92210219960044023D /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
