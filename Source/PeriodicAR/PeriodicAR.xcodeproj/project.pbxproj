@@ -284,7 +284,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = 849UP4BSN8;
 				INFOPLIST_FILE = PeriodicAR/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -292,6 +293,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.ymedialabs.PeriodicAR;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "91ef7b58-a567-4f27-b342-93781cc9581f";
+				PROVISIONING_PROFILE_SPECIFIER = "IndiaDev*";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -301,7 +304,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = 849UP4BSN8;
 				INFOPLIST_FILE = PeriodicAR/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -309,6 +313,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.ymedialabs.PeriodicAR;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "91ef7b58-a567-4f27-b342-93781cc9581f";
+				PROVISIONING_PROFILE_SPECIFIER = "IndiaDev*";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
