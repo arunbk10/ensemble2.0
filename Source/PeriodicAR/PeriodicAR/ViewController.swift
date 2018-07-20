@@ -13,7 +13,6 @@ import ARKit
 class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDelegate {
 
     @IBOutlet var sceneView: ARSCNView!
-    var skScene = SKScene()
     var arrayElements = ["A", "H", "C", "B"]
     
     var sessionConfiguration: ARWorldTrackingConfiguration = {
@@ -36,9 +35,6 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
         
         // Show statistics such as fps and timing information
         sceneView.showsStatistics = true
-        
-        // Set the scene to the view
-        sceneView.scene = scene
     }
     
     func createTable() {
@@ -48,57 +44,46 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
             rectangleMaterial.diffuse.contents = UIColor.gray
             box.materials = [rectangleMaterial]
             let boxNode = SCNNode(geometry: box)
-            boxNode.position = SCNVector3(-CGFloat(i) * 1.15,0,-5)
+            //Fix me
+            boxNode.position = SCNVector3(CGFloat(i)*1.05,0,-5)
             boxNode.name = arrayElements[i]
             sceneView.scene.rootNode.addChildNode(boxNode)
             
             let textposition = SCNVector3Make(Float(i), 0,-1)
-            let textNode = self.addText(text: arrayElements[i], position: textposition,color: UIColor.gray)
+            let textNode = addText(text: arrayElements[i], position: textposition,color: UIColor.gray)
             let textMaterials = SCNMaterial()
             textMaterials.diffuse.contents = textNode
-            boxNode.eulerAngles.z = Float.pi / 2
             box.materials = [textMaterials]
         }
     }
     
     func addText(text: String, position: SCNVector3,color: UIColor)->SKScene {
-        skScene = SKScene(size: CGSize(width: 200, height: 200))
-        skScene.backgroundColor = color
+        let skScene = SKScene(size: CGSize(width: 200, height: 200))
+        skScene.backgroundColor = UIColor.gray
         let labelNode = SKLabelNode(text: text)
         labelNode.fontSize = 30
         labelNode.color = UIColor.red
         labelNode.fontColor = UIColor.red
-        labelNode.fontName = "Kailasa"
-        labelNode.zRotation = .pi/2
         labelNode.yScale = -1
-        labelNode.position = CGPoint(x:100,y:100)
+        labelNode.position = CGPoint(x:skScene.size.width/2,y:skScene.size.height/2)
         skScene.addChild(labelNode)
         
         return skScene
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        // Create a session configuration
-        let configuration = ARWorldTrackingConfiguration()
-
-        // Run the view's session
-        sceneView.session.run(configuration)
-    }
-    
-    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+       
         if ARWorldTrackingConfiguration.isSupported {
-            let configuration = ARWorldTrackingConfiguration()
             self.sceneView.automaticallyUpdatesLighting = true
             sessionConfiguration.isLightEstimationEnabled = true
             self.sceneView.autoenablesDefaultLighting = true
-            self.sceneView.session.run(configuration)
-            createTable()
+            self.sceneView.session.run(sessionConfiguration)
             UIApplication.shared.isIdleTimerDisabled = true
+          
+            createTable()
         }
+  
     }
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
@@ -113,8 +98,6 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
     }
 
     // MARK: - ARSCNViewDelegate
-    
-    
 
     // Override to create and configure nodes for anchors added to the view's session.
     func renderer(_ renderer: SCNSceneRenderer, nodeFor anchor: ARAnchor) -> SCNNode? {
