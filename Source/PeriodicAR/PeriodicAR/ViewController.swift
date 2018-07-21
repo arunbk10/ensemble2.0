@@ -19,6 +19,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
     
     var elementsArray: Array<ElementObject> = []
     var countDict = [String : Int]()
+    var periodicPosition: SCNVector3 = SCNVector3(0, 0, 0)
     
     var sessionConfiguration: ARWorldTrackingConfiguration = {
         let configuration = ARWorldTrackingConfiguration()
@@ -34,16 +35,11 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
         
         let scene = SCNScene()
         sceneView.scene = scene
-        
         self.sceneView.autoenablesDefaultLighting = true
         self.sceneView.antialiasingMode = .multisampling4X
         sceneView.scene.physicsWorld.contactDelegate = self
         // Set the view's delegate
         sceneView.delegate = self
-        
-        
-        // Show statistics such as fps and timing information
-        sceneView.showsStatistics = true
         
         if let path = Bundle.main.path(forResource: "ElementList", ofType: "json") {
             do {
@@ -74,6 +70,10 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
             let boxNode = SCNNode(geometry: box)
             //Fix me
             boxNode.position = SCNVector3(((elementsArray[i].xPosition)) - 10 , -elementsArray[i].yPosition + 5, -10)
+            if i == 0 {
+                periodicPosition = boxNode.position
+            }
+            
             boxNode.name = elementsArray[i].symbol
             sceneView.scene.rootNode.addChildNode(boxNode)
             
@@ -112,6 +112,17 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
     @IBAction func resetTapped(_ sender: Any) {
         countDict = [:]
         molecularFormulaLabel.text = ""
+        molecularFormulaLabel.isHidden = true
+        for index in stride(from: 0, to: parentPostions.count, by: 1) {
+            if let nodes = sceneView.scene.rootNode.childNode(withName: "ParentNode + \(index)", recursively: false){
+                nodes.removeFromParentNode()
+            }
+        }
+        self.sceneView.scene.rootNode.enumerateChildNodes { (node, _) in
+            if node.name == "LineNode" {
+                node.removeFromParentNode()
+            }
+        }
     }
     @IBAction func convertTapped(_ sender: Any) {
         didSubmit(with: countDict["C"] ?? 0, hydrogenCount: countDict["H"] ?? 0)
@@ -264,6 +275,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
     private func updateNode(atIndex startIndex: Int, endIndex: Int, bondColor: UIColor) {
     
                 let linenode = Cylinder(startPoint:parentPostions[startIndex], endPoint: parentPostions[endIndex], radius: 0.2, radSegmentCount: 0, color: bondColor)
+                linenode.name = "Linenode"
                 self.sceneView.scene.rootNode.addChildNode(linenode)
        
     }
@@ -301,11 +313,11 @@ extension ViewController {
         return childAngles
     }
     
-    func getTransform(angle:Float) -> SCNMatrix4 {
-        let distance = 0.15
+    func getTransform(angle:Float, y: Float = -0.15) -> SCNMatrix4 {
+        let distance = 0.25
         //let distance = BearAngle.distanceTwopoints(map1: currentLocation, map2: endLocation)
         
-        let translation = SCNMatrix4MakeTranslation(0, -0.15, Float(-distance))
+        let translation = SCNMatrix4MakeTranslation(0, y, Float(-distance))
         // Rotate (yaw) around y axis
         let rotation = SCNMatrix4MakeRotation(-1 * GLKMathDegreesToRadians(angle), 0, 1, 0)
         
@@ -327,20 +339,22 @@ extension ViewController {
     func addSpheres(withChildNodes nodes: [(nodeName: String?, nodeColor: UIColor, bondColor: UIColor)], parentNodeName: String?, parentNodeColor: UIColor,parentIndex:Int){
         
         let firstnode = SCNNode(geometry: getSphere(text: parentNodeName ?? "", color: parentNodeColor))
+        firstnode.name = "ParentNode + \(parentIndex)"
         firstnode.light = getLight()
-        firstnode.position = SCNVector3(-0.25 * Double(parentIndex),0,-0.5)
+        firstnode.position = SCNVector3(-1.0 * Double(parentIndex+1),0,-0.5)
         parentPostions.append(firstnode.position)
         self.sceneView.scene.rootNode.addChildNode(firstnode)
         // firstnode.addChildNode(getTextNode(text: "C", pos: firstnode.position))
         for (index , childAngle) in getChildVectors(childCount: nodes.count).enumerated() {
             let childNode = SCNNode(geometry: getSphere(text: nodes[index].nodeName ?? "", color: nodes[index].nodeColor))
             childNode.light = getLight()
-            childNode.transform = childAngle
+            childNode.transform = (nodes.count == 2 && index == 1) ? getTransform(angle: 90, y: 0.15) : childAngle
             firstnode.addChildNode(childNode)
             let pointTransform = childNode.worldTransform //turns the point into a point on the world grid
             let pointVector = SCNVector3Make(pointTransform.m41, pointTransform.m42, pointTransform.m43)
             //   this is used for single line             self.sceneView.scene.rootNode.addChildNode(firstnode.position.line(to: pointVector, color: .black))
             let linenode = Cylinder(startPoint:firstnode.position, endPoint: pointVector, radius: 0.2, radSegmentCount: 0, color: nodes[index].bondColor)
+            linenode.name = "LineNode"
             self.sceneView.scene.rootNode.addChildNode(linenode)
             //  childNode.addChildNode(getTextNode(text: "H", pos: childNode.position))
         }
