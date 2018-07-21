@@ -33,6 +33,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
         sceneView.scene.physicsWorld.contactDelegate = self
         // Set the view's delegate
         sceneView.delegate = self
+
         
         // Show statistics such as fps and timing information
         sceneView.showsStatistics = true
@@ -45,7 +46,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
                     
                     for i in 0...(elements.count)-1 {
                         let element = elements[i]
-                        let city = City(name: element["name"] as! String, symbol: element["symbol"] as! String, color: UIColor.red, xPosition: element["xpos"] as! CGFloat, yPosition: element["ypos"] as! CGFloat)
+                        let city = City(name: element["name"] as! String, symbol: element["symbol"] as! String, color: colorWithHexString(hex: element["color"] as! String), xPosition: element["xpos"] as! CGFloat, yPosition: element["ypos"] as! CGFloat)
                         elementsArray.append(city)
                     }
                 }
@@ -58,13 +59,13 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
     func createTable() {
         
         for i in 0...(elementsArray.count - 1)  {
-            let box = SCNBox(width: 1, height: 1, length: 0.01, chamferRadius: 0)
+            let box = SCNBox(width: 1, height: 1, length: 0.02, chamferRadius: 0.5)
             let rectangleMaterial = SCNMaterial()
             rectangleMaterial.diffuse.contents = elementsArray[i].color
             box.materials = [rectangleMaterial]
             let boxNode = SCNNode(geometry: box)
             //Fix me
-            boxNode.position = SCNVector3(((elementsArray[i].xPosition)) - 10 ,-elementsArray[i].yPosition,-10)
+            boxNode.position = SCNVector3(((elementsArray[i].xPosition)) - 10 , -elementsArray[i].yPosition + 5, -10)
             boxNode.name = elementsArray[i].symbol
             sceneView.scene.rootNode.addChildNode(boxNode)
             
@@ -74,6 +75,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
             tag.font = UIFont(name: "Optima", size: 0.5)
             let tagNode = SCNNode(geometry: tag)
             tagNode.position =  SCNVector3Make((boxNode.position.x - Float((box.width/2) - 0.25)), boxNode.position.y - 0.25 - Float(box.height),boxNode.position.z)
+            
             self.sceneView.scene.rootNode.addChildNode(tagNode)
 
         }
