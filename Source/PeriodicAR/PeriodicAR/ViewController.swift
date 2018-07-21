@@ -223,7 +223,15 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
             // Here it's a triple bond
             bondCount = 3
         } else {
-            print("Invalid strings")
+            let alertController = UIAlertController(title: nil, message: "Invalid chemical composition!", preferredStyle: .alert)
+            let okAction = UIAlertAction(title: "OK", style: .default) { (action) in
+                self.dismiss(animated: true, completion: nil)
+            }
+            
+            alertController.addAction(okAction)
+            
+            present(alertController, animated: true, completion: nil)
+            
             return
         }
         
@@ -231,7 +239,11 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
             if index == 0 {
                 createChildNodes(withChildNodes: Array(repeating: ("H", selectedElementColors["H"] ?? UIColor.white, UIColor.green), count: maxHydrogenCount - bondCount), parentNodeName: "C", parentNodeColor: selectedElementColors["C"] ?? UIColor.white, parentIndex: index)
             } else if index == (carbonCount - 1) {
-                createChildNodes(withChildNodes: Array(repeating: ("H", selectedElementColors["H"] ?? UIColor.white, UIColor.green), count: maxHydrogenCount - 1), parentNodeName: "C", parentNodeColor: selectedElementColors["C"] ?? UIColor.white, parentIndex: index)
+                if index == 1 {
+                    createChildNodes(withChildNodes: Array(repeating: ("H", selectedElementColors["H"] ?? UIColor.white, UIColor.green), count: maxHydrogenCount - bondCount), parentNodeName: "C", parentNodeColor: selectedElementColors["C"] ?? UIColor.white, parentIndex: index)
+                } else {
+                    createChildNodes(withChildNodes: Array(repeating: ("H", selectedElementColors["H"] ?? UIColor.white, UIColor.green), count: maxHydrogenCount - 1), parentNodeName: "C", parentNodeColor: selectedElementColors["C"] ?? UIColor.white, parentIndex: index)
+                }
             } else if index == 1 {
                 createChildNodes(withChildNodes: Array(repeating: ("H", selectedElementColors["H"] ?? UIColor.white, UIColor.green), count: maxHydrogenCount - bondCount - 1), parentNodeName: "C", parentNodeColor: selectedElementColors["C"] ?? UIColor.white, parentIndex: index)
             } else {
@@ -301,6 +313,8 @@ extension ViewController {
 extension ViewController {
     
     func getChildVectors(childCount:Int) -> [SCNMatrix4]{
+        guard childCount != 0 else { return [] }
+        
         var childAngles :[SCNMatrix4] = []
         let kDefaultAngle =  Float(360 / childCount)
         var baseAngle : Float = kDefaultAngle
@@ -340,14 +354,12 @@ extension ViewController {
         
         let firstnode = SCNNode(geometry: getSphere(text: parentNodeName ?? "", color: parentNodeColor))
         firstnode.name = "ParentNode + \(parentIndex)"
-        firstnode.light = getLight()
         firstnode.position = SCNVector3(-1.0 * Double(parentIndex+1),0,-0.5)
         parentPostions.append(firstnode.position)
         self.sceneView.scene.rootNode.addChildNode(firstnode)
         // firstnode.addChildNode(getTextNode(text: "C", pos: firstnode.position))
         for (index , childAngle) in getChildVectors(childCount: nodes.count).enumerated() {
             let childNode = SCNNode(geometry: getSphere(text: nodes[index].nodeName ?? "", color: nodes[index].nodeColor))
-            childNode.light = getLight()
             childNode.transform = (nodes.count == 2 && index == 1) ? getTransform(angle: 90, y: 0.15) : childAngle
             firstnode.addChildNode(childNode)
             let pointTransform = childNode.worldTransform //turns the point into a point on the world grid
