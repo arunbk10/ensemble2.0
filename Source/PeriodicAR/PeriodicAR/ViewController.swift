@@ -200,19 +200,18 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
     private func createParentNodes(withNodeCount nodeCount: Int) {
         for index in stride(from: 0, to: nodeCount - 1, by: 1) {
             // FIXME:
-//            var bondCount = 0
-//            if isAlkane(carbonCount: carbonCount, hydrogenCount: hydrogenCount) {
-//                // Here it's is a single bond
-//                bondCount = 1
-//            } else if isAlkene(carbonCount: carbonCount, hydrogenCount: hydrogenCount) {
-//                // Here it's a double bond
-//                bondCount = 2
-//            } else if isAlkyne(carbonCount: carbonCount, hydrogenCount: hydrogenCount) {
-//                // Here it's a triple bond
-//                bondCount = 3
-//            }
-            
-            addNode(atIndex: index, endIndex: index + 1, bondColor: UIColor.red)
+            let carbonCount = 4
+            let hydrogenCount = 4
+            if isAlkane(carbonCount: carbonCount, hydrogenCount: hydrogenCount) {
+                // Here it's is a single bond
+                addNode(atIndex: index, endIndex: index + 1, bondColor: UIColor.green)
+            } else if isAlkene(carbonCount: carbonCount, hydrogenCount: hydrogenCount) {
+                // Here it's a double bond
+                addNode(atIndex: index, endIndex: index + 1, bondColor: UIColor.blue)
+            } else if isAlkyne(carbonCount: carbonCount, hydrogenCount: hydrogenCount) {
+                // Here it's a triple bond
+                addNode(atIndex: index, endIndex: index + 1, bondColor: UIColor.red)
+            }
         }
     }
     
