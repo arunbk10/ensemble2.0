@@ -27,7 +27,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
         
         let scene = SCNScene()
         sceneView.scene = scene
-        sceneView.allowsCameraControl = true
+        
         self.sceneView.autoenablesDefaultLighting = true
         self.sceneView.antialiasingMode = .multisampling4X
         sceneView.scene.physicsWorld.contactDelegate = self
@@ -64,7 +64,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
             box.materials = [rectangleMaterial]
             let boxNode = SCNNode(geometry: box)
             //Fix me
-            boxNode.position = SCNVector3(((elementsArray[i].xPosition)) ,elementsArray[i].yPosition,-20)
+            boxNode.position = SCNVector3(((elementsArray[i].xPosition)) - 10 ,-elementsArray[i].yPosition,-10)
             boxNode.name = elementsArray[i].symbol
             sceneView.scene.rootNode.addChildNode(boxNode)
             
