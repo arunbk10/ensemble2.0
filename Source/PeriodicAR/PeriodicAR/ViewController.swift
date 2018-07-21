@@ -22,6 +22,8 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
         return configuration
     }()
     
+    private var selectedElementColors: [String: UIColor] = [:]
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -140,6 +142,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
             if let hitObject = hitList.first {
                 let node = hitObject.node
                 print(node.name ?? "")
+                selectedElementColors[node.name ?? ""] = (node.geometry?.materials.first?.diffuse.contents as? UIColor ?? .white)
             }
         }
     }
@@ -185,43 +188,44 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
             return
         }
         
-        createParentNodes(withNodeCount: carbonCount)
         for index in stride(from: 0, to: carbonCount, by: 1) {
             if index == 0 {
-                createChildNodes(withNodeCount: maxHydrogenCount - bondCount, parentNodeIndex: index)
+                createChildNodes(withChildNodes: Array(repeating: ("H", selectedElementColors["H"] ?? UIColor.white, UIColor.green), count: maxHydrogenCount - bondCount), parentNodeName: "C", parentNodeColor: selectedElementColors["C"] ?? UIColor.white)
             } else if index == 1 {
-                createChildNodes(withNodeCount: maxHydrogenCount - bondCount - 1, parentNodeIndex: index)
+                createChildNodes(withChildNodes: Array(repeating: ("H", selectedElementColors["H"] ?? UIColor.white, UIColor.green), count: maxHydrogenCount - bondCount - 1), parentNodeName: "C", parentNodeColor: selectedElementColors["C"] ?? UIColor.white)
             } else if index == (carbonCount - 1) {
-                createChildNodes(withNodeCount: maxHydrogenCount - bondCount, parentNodeIndex: index)
+                createChildNodes(withChildNodes: Array(repeating: ("H", selectedElementColors["H"] ?? UIColor.white, UIColor.green), count: maxHydrogenCount - bondCount), parentNodeName: "C", parentNodeColor: selectedElementColors["C"] ?? UIColor.white)
             } else {
-                createChildNodes(withNodeCount: 2, parentNodeIndex: index)
+                createChildNodes(withChildNodes: Array(repeating: ("H", selectedElementColors["H"] ?? UIColor.white, UIColor.green), count: 2), parentNodeName: "C", parentNodeColor: selectedElementColors["C"] ?? UIColor.white)
             }
         }
+        
+        updateParentNodes(withNodeCount: carbonCount)
     }
     
-    private func createParentNodes(withNodeCount nodeCount: Int) {
+    private func updateParentNodes(withNodeCount nodeCount: Int) {
         for index in stride(from: 0, to: nodeCount - 1, by: 1) {
             // FIXME:
             let carbonCount = 4
             let hydrogenCount = 4
             if isAlkane(carbonCount: carbonCount, hydrogenCount: hydrogenCount) {
                 // Here it's is a single bond
-                addNode(atIndex: index, endIndex: index + 1, bondColor: UIColor.green)
+                updateNode(atIndex: index, endIndex: index + 1, bondColor: UIColor.green)
             } else if isAlkene(carbonCount: carbonCount, hydrogenCount: hydrogenCount) {
                 // Here it's a double bond
-                addNode(atIndex: index, endIndex: index + 1, bondColor: UIColor.blue)
+                updateNode(atIndex: index, endIndex: index + 1, bondColor: UIColor.blue)
             } else if isAlkyne(carbonCount: carbonCount, hydrogenCount: hydrogenCount) {
                 // Here it's a triple bond
-                addNode(atIndex: index, endIndex: index + 1, bondColor: UIColor.red)
+                updateNode(atIndex: index, endIndex: index + 1, bondColor: UIColor.red)
             }
         }
     }
     
-    private func createChildNodes(withNodeCount nodeCount: Int, parentNodeIndex: Int) {
+    private func createChildNodes(withChildNodes nodes: [(nodeName: String?, nodeColor: UIColor, bondColor: UIColor)], parentNodeName: String?, parentNodeColor: UIColor) {
         // FIXME:
     }
     
-    private func addNode(atIndex startIndex: Int, endIndex: Int, bondColor: UIColor) {
+    private func updateNode(atIndex startIndex: Int, endIndex: Int, bondColor: UIColor) {
         // FIXME:
     }
 }
