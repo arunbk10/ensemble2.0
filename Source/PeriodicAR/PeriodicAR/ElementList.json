@@ -14,7 +14,7 @@
                  
                  "category": "diatomic nonmetal",
                  
-                 "color": "#D9FFFF",
+                 "color": "#FFFFFF",
                  
                  "density": 0.08988,
                  
@@ -114,7 +114,7 @@
                  
                  "category": "alkali metal",
                  
-                 "color": "#D9FFFF",
+                 "color": "#CC80FF",
                  
                  "density": 0.534,
                  
@@ -166,7 +166,7 @@
                  
                  "category": "alkaline earth metal",
                  
-                 "color": "#D9FFFF",
+                 "color": "#C2FF00",
                  
                  "density": 1.85,
                  
@@ -218,7 +218,7 @@
                  
                  "category": "metalloid",
                  
-                 "color": "#D9FFFF",
+                 "color": "#FFB5B5",
                  
                  "density": 2.08,
                  
@@ -270,7 +270,7 @@
                  
                  "category": "polyatomic nonmetal",
                  
-                 "color": "#D9FFFF",
+                 "color": "#909090",
                  
                  "density": 1.821,
                  
@@ -322,7 +322,7 @@
                  
                  "category": "diatomic nonmetal",
                  
-                 "color": "#D9FFFF",
+                 "color": "#3050F8",
                  
                  "density": 1.251,
                  
@@ -374,7 +374,7 @@
                  
                  "category": "diatomic nonmetal",
                  
-                 "color": "#D9FFFF",
+                 "color": "#FF0D0D",
                  
                  "density": 1.429,
                  
@@ -426,7 +426,7 @@
                  
                  "category": "diatomic nonmetal",
                  
-                 "color": "#D9FFFF",
+                 "color": "#90E050",
                  
                  "density": 1.696,
                  
@@ -478,7 +478,7 @@
                  
                  "category": "noble gas",
                  
-                 "color": "#D9FFFF",
+                 "color": "#B3E3F5",
                  
                  "density": 0.9002,
                  
@@ -530,7 +530,7 @@
                  
                  "category": "alkali metal",
                  
-                 "color": "#D9FFFF",
+                 "color": "#AB5CF2",
                  
                  "density": 0.968,
                  
@@ -584,7 +584,7 @@
                  
                  "category": "alkaline earth metal",
                  
-                 "color": "#D9FFFF",
+                 "color": "#8AFF00",
                  
                  "density": 1.738,
                  
@@ -638,7 +638,7 @@
                  
                  "category": "post-transition metal",
                  
-                 "color": "#D9FFFF",
+                 "color": "#BFA6A6",
                  
                  "density": 2.7,
                  
@@ -692,7 +692,7 @@
                  
                  "category": "metalloid",
                  
-                 "color": "#D9FFFF",
+                 "color": "#F0C8A0",
                  
                  "density": 2.329,
                  
@@ -746,7 +746,7 @@
                  
                  "category": "polyatomic nonmetal",
                  
-                 "color": "#D9FFFF",
+                 "color": "#FF8000",
                  
                  "density": 1.823,
                  
@@ -800,7 +800,7 @@
                  
                  "category": "polyatomic nonmetal",
                  
-                 "color": "#D9FFFF",
+                 "color": "#FFFF30",
                  
                  "density": 2.07,
                  
@@ -854,7 +854,7 @@
                  
                  "category": "diatomic nonmetal",
                  
-                 "color": "#D9FFFF",
+                 "color": "#1FF01F",
                  
                  "density": 3.2,
                  
@@ -908,7 +908,7 @@
                  
                  "category": "noble gas",
                  
-                 "color": "#D9FFFF",
+                 "color": "#80D1E3",
                  
                  "density": 1.784,
                  
@@ -962,7 +962,7 @@
                  
                  "category": "alkali metal",
                  
-                 "color": "#D9FFFF",
+                 "color": "#8F40D4",
                  
                  "density": 0.862,
                  
@@ -1018,7 +1018,7 @@
                  
                  "category": "alkaline earth metal",
                  
-                 "color": "#D9FFFF",
+                 "color": "#3DFF00",
                  
                  "density": 1.55,
                  
@@ -1074,7 +1074,7 @@
                  
                  "category": "transition metal",
                  
-                 "color": "#D9FFFF",
+                 "color": "#E6E6E6",
                  
                  "density": 2.985,
                  
@@ -1130,7 +1130,7 @@
                  
                  "category": "transition metal",
                  
-                 "color": "#D9FFFF",
+                 "color": "#BFC2C7",
                  
                  "density": 4.506,
                  
@@ -1186,7 +1186,7 @@
                  
                  "category": "transition metal",
                  
-                 "color": "#D9FFFF",
+                 "color": "#A6A6AB",
                  
                  "density": 6.0,
                  
@@ -1242,7 +1242,7 @@
                  
                  "category": "transition metal",
                  
-                 "color": "#D9FFFF",
+                 "color": "#8A99C7",
                  
                  "density": 7.19,
                  
@@ -1298,7 +1298,7 @@
                  
                  "category": "transition metal",
                  
-                 "color": "#D9FFFF",
+                 "color": "#9C7AC7",
                  
                  "density": 7.21,
                  
@@ -1354,7 +1354,7 @@
                  
                  "category": "transition metal",
                  
-                 "color": "#D9FFFF",
+                 "color": "#E06633",
                  
                  "density": 7.874,
                  
@@ -1410,7 +1410,7 @@
                  
                  "category": "transition metal",
                  
-                 "color": "metallic gray",
+                 "color": "#F090A0",
                  
                  "density": 8.9,
                  
@@ -1466,7 +1466,7 @@
                  
                  "category": "transition metal",
                  
-                 "color": "#D9FFFF",
+                 "color": "#50D050",
                  
                  "density": 8.908,
                  
@@ -1522,7 +1522,7 @@
                  
                  "category": "transition metal",
                  
-                 "color": "#D9FFFF",
+                 "color": "#C88033",
                  
                  "density": 8.96,
                  
@@ -1578,7 +1578,7 @@
                  
                  "category": "transition metal",
                  
-                 "color": "#D9FFFF",
+                 "color": "#7D80B0",
                  
                  "density": 7.14,
                  
@@ -1634,7 +1634,7 @@
                  
                  "category": "post-transition metal",
                  
-                 "color": "#D9FFFF",
+                 "color": "#C28F8F",
                  
                  "density": 5.91,
                  
@@ -1690,7 +1690,7 @@
                  
                  "category": "metalloid",
                  
-                 "color": "#D9FFFF",
+                 "color": "#668F8F",
                  
                  "density": 5.323,
                  
@@ -1746,7 +1746,7 @@
                  
                  "category": "metalloid",
                  
-                 "color": "#D9FFFF",
+                 "color": "#BD80E3",
                  
                  "density": 5.727,
                  
@@ -1802,7 +1802,7 @@
                  
                  "category": "polyatomic nonmetal",
                  
-                 "color": "#D9FFFF",
+                 "color": "#FFA100",
                  
                  "density": 4.81,
                  
@@ -1858,7 +1858,7 @@
                  
                  "category": "diatomic nonmetal",
                  
-                 "color": "#D9FFFF",
+                 "color": "#A62929",
                  
                  "density": 23.1028,
                  
@@ -1914,7 +1914,7 @@
                  
                  "category": "noble gas",
                  
-                 "color": "#D9FFFF",
+                 "color": "#5CB8D1",
                  
                  "density": 3.749,
                  
@@ -1970,7 +1970,7 @@
                  
                  "category": "alkali metal",
                  
-                 "color": "#D9FFFF",
+                 "color": "#702EB0",
                  
                  "density": 1.532,
                  
@@ -2028,7 +2028,7 @@
                  
                  "category": "alkaline earth metal",
                  
-                 "color": "#D9FFFF",
+                 "color": "#00FF00",
                  
                  "density": 2.64,
                  
@@ -2086,7 +2086,7 @@
                  
                  "category": "transition metal",
                  
-                 "color": "#D9FFFF",
+                 "color": "#94FFFF",
                  
                  "density": 4.472,
                  
@@ -2144,7 +2144,7 @@
                  
                  "category": "transition metal",
                  
-                 "color": "#D9FFFF",
+                 "color": "#94E0E0",
                  
                  "density": 6.52,
                  
@@ -2202,7 +2202,7 @@
                  
                  "category": "transition metal",
                  
-                 "color": "#D9FFFF",
+                 "color": "#73C2C9",
                  
                  "density": 8.57,
                  
@@ -2260,7 +2260,7 @@
                  
                  "category": "transition metal",
                  
-                 "color": "#D9FFFF",
+                 "color": "#54B5B5",
                  
                  "density": 10.28,
                  
@@ -2318,7 +2318,7 @@
                  
                  "category": "transition metal",
                  
-                 "color": "#D9FFFF",
+                 "color": "#3B9E9E",
                  
                  "density": 11,
                  
@@ -2376,7 +2376,7 @@
                  
                  "category": "transition metal",
                  
-                 "color": "#D9FFFF",
+                 "color": "#248F8F",
                  
                  "density": 12.45,
                  
@@ -2434,7 +2434,7 @@
                  
                  "category": "transition metal",
                  
-                 "color": "#D9FFFF",
+                 "color": "#0A7D8C",
                  
                  "density": 12.41,
                  
@@ -2492,7 +2492,7 @@
                  
                  "category": "transition metal",
                  
-                 "color": "#D9FFFF",
+                 "color": "#6985",
                  
                  "density": 12.023,
                  
@@ -2548,7 +2548,7 @@
                  
                  "category": "transition metal",
                  
-                 "color": "#D9FFFF",
+                 "color": "#C0C0C0",
                  
                  "density": 10.49,
                  
@@ -2606,7 +2606,7 @@
                  
                  "category": "transition metal",
                  
-                 "color": "#D9FFFF",
+                 "color": "#FFD98F",
                  
                  "density": 8.65,
                  
@@ -2664,7 +2664,7 @@
                  
                  "category": "post-transition metal",
                  
-                 "color": "#D9FFFF",
+                 "color": "#A67573",
                  
                  "density": 7.31,
                  
@@ -2722,7 +2722,7 @@
                  
                  "category": "post-transition metal",
                  
-                 "color": "#D9FFFF",
+                 "color": "#668080",
                  
                  "density": 7.365,
                  
@@ -2780,7 +2780,7 @@
                  
                  "category": "metalloid",
                  
-                 "color": "#D9FFFF",
+                 "color": "#9E63B5",
                  
                  "density": 6.697,
                  
@@ -2838,7 +2838,7 @@
                  
                  "category": "metalloid",
                  
-                 "color": "#D9FFFF",
+                 "color": "#D47A00",
                  
                  "density": 6.24,
                  
@@ -2896,7 +2896,7 @@
                  
                  "category": "diatomic nonmetal",
                  
-                 "color": "#D9FFFF",
+                 "color": "#940094",
                  
                  "density": 4.933,
                  
@@ -2954,7 +2954,7 @@
                  
                  "category": "noble gas",
                  
-                 "color": "#D9FFFF",
+                 "color": "#429EB0",
                  
                  "density": 5.894,
                  
@@ -3012,7 +3012,7 @@
                  
                  "category": "alkali metal",
                  
-                 "color": "#D9FFFF",
+                 "color": "#57178F",
                  
                  "density": 1.93,
                  
@@ -3072,7 +3072,7 @@
                  
                  "category": "alkaline earth metal",
                  
-                 "color": "#D9FFFF",
+                 "color": "#00C900",
                  
                  "density": 3.51,
                  
@@ -3132,7 +3132,7 @@
                  
                  "category": "lanthanide",
                  
-                 "color": "#D9FFFF",
+                 "color": "#70D4FF",
                  
                  "density": 6.162,
                  
@@ -3192,7 +3192,7 @@
                  
                  "category": "lanthanide",
                  
-                 "color": "#D9FFFF",
+                 "color": "#FFFFC7",
                  
                  "density": 6.77,
                  
@@ -3252,7 +3252,7 @@
                  
                  "category": "lanthanide",
                  
-                 "color": "#D9FFFF",
+                 "color": "#D9FFC7",
                  
                  "density": 6.77,
                  
@@ -3312,7 +3312,7 @@
                  
                  "category": "lanthanide",
                  
-                 "color": "#D9FFFF",
+                 "color": "#C7FFC7",
                  
                  "density": 7.01,
                  
@@ -3372,7 +3372,7 @@
                  
                  "category": "lanthanide",
                  
-                 "color": "#D9FFFF",
+                 "color": "#A3FFC7",
                  
                  "density": 7.26,
                  
@@ -3432,7 +3432,7 @@
                  
                  "category": "lanthanide",
                  
-                 "color": "#D9FFFF",
+                 "color": "#8FFFC7",
                  
                  "density": 7.52,
                  
@@ -3492,7 +3492,7 @@
                  
                  "category": "lanthanide",
                  
-                 "color": "#D9FFFF",
+                 "color": "#61FFC7",
                  
                  "density": 5.264,
                  
@@ -3552,7 +3552,7 @@
                  
                  "category": "lanthanide",
                  
-                 "color": "#D9FFFF",
+                 "color": "#45FFC7",
                  
                  "density": 7.9,
                  
@@ -3612,7 +3612,7 @@
                  
                  "category": "lanthanide",
                  
-                 "color": "#D9FFFF",
+                 "color": "#30FFC7",
                  
                  "density": 8.23,
                  
@@ -3672,7 +3672,7 @@
                  
                  "category": "lanthanide",
                  
-                 "color": "#D9FFFF",
+                 "color": "#1FFFC7",
                  
                  "density": 8.54,
                  
@@ -3732,7 +3732,7 @@
                  
                  "category": "lanthanide",
                  
-                 "color": "#D9FFFF",
+                 "color": "#00FF9C",
                  
                  "density": 8.79,
                  
@@ -3852,7 +3852,7 @@
                  
                  "category": "lanthanide",
                  
-                 "color": "#D9FFFF",
+                 "color": "#00D452",
                  
                  "density": 9.32,
                  
@@ -3912,7 +3912,7 @@
                  
                  "category": "lanthanide",
                  
-                 "color": "#D9FFFF",
+                 "color": "#00BF38",
                  
                  "density": 6.9,
                  
@@ -3972,7 +3972,7 @@
                  
                  "category": "lanthanide",
                  
-                 "color": "#D9FFFF",
+                 "color": "#00AB24",
                  
                  "density": 9.841,
                  
@@ -4032,7 +4032,7 @@
                  
                  "category": "transition metal",
                  
-                 "color": "#D9FFFF",
+                 "color": "#4DC2FF",
                  
                  "density": 13.31,
                  
@@ -4092,7 +4092,7 @@
                  
                  "category": "transition metal",
                  
-                 "color": "#D9FFFF",
+                 "color": "#4DA6FF",
                  
                  "density": 16.69,
                  
@@ -4152,7 +4152,7 @@
                  
                  "category": "transition metal",
                  
-                 "color": "#D9FFFF",
+                 "color": "#2194D6",
                  
                  "density": 19.25,
                  
@@ -4212,7 +4212,7 @@
                  
                  "category": "transition metal",
                  
-                 "color": "#D9FFFF",
+                 "color": "#267DAB",
                  
                  "density": 21.02,
                  
@@ -4272,7 +4272,7 @@
                  
                  "category": "transition metal",
                  
-                 "color": "#D9FFFF",
+                 "color": "#266696",
                  
                  "density": 22.59,
                  
@@ -4332,7 +4332,7 @@
                  
                  "category": "transition metal",
                  
-                 "color": "#D9FFFF",
+                 "color": "#175487",
                  
                  "density": 22.56,
                  
@@ -4392,7 +4392,7 @@
                  
                  "category": "transition metal",
                  
-                 "color": "#D9FFFF",
+                 "color": "#D0D0E0",
                  
                  "density": 21.45,
                  
@@ -4452,7 +4452,7 @@
                  
                  "category": "transition metal",
                  
-                 "color": "#D9FFFF",
+                 "color": "#FFD123",
                  
                  "density": 19.3,
                  
@@ -4512,7 +4512,7 @@
                  
                  "category": "transition metal",
                  
-                 "color": "#D9FFFF",
+                 "color": "#B8B8D0",
                  
                  "density": 13.534,
                  
@@ -4572,7 +4572,7 @@
                  
                  "category": "post-transition metal",
                  
-                 "color": "#D9FFFF",
+                 "color": "#A6544D",
                  
                  "density": 11.85,
                  
@@ -4632,7 +4632,7 @@
                  
                  "category": "post-transition metal",
                  
-                 "color": "#D9FFFF",
+                 "color": "#575961",
                  
                  "density": 11.34,
                  
@@ -4692,7 +4692,7 @@
                  
                  "category": "post-transition metal",
                  
-                 "color": "#D9FFFF",
+                 "color": "#9E4FB5",
                  
                  "density": 9.78,
                  
@@ -4752,7 +4752,7 @@
                  
                  "category": "post-transition metal",
                  
-                 "color": "#D9FFFF",
+                 "color": "#AB5C00",
                  
                  "density": 9.196,
                  
@@ -4812,7 +4812,7 @@
                  
                  "category": "metalloid",
                  
-                 "color": "#D9FFFF",
+                 "color": "#754F45",
                  
                  "density": 26.35,
                  
@@ -4872,7 +4872,7 @@
                  
                  "category": "noble gas",
                  
-                 "color": "#D9FFFF",
+                 "color": "#428296",
                  
                  "density": 9.73,
                  
@@ -4932,7 +4932,7 @@
                  
                  "category": "alkali metal",
                  
-                 "color": "#D9FFFF",
+                 "color": "#420066",
                  
                  "density": 1.87,
                  
@@ -4994,7 +4994,7 @@
                  
                  "category": "alkaline earth metal",
                  
-                 "color": "#D9FFFF",
+                 "color": "#007D00",
                  
                  "density": 5.5,
                  
@@ -5056,7 +5056,7 @@
                  
                  "category": "actinide",
                  
-                 "color": "#D9FFFF",
+                 "color": "#70ABFA",
                  
                  "density": 10,
                  
@@ -5118,7 +5118,7 @@
                  
                  "category": "actinide",
                  
-                 "color": "#D9FFFF",
+                 "color": "#00BAFF",
                  
                  "density": 11.724,
                  
@@ -5180,7 +5180,7 @@
                  
                  "category": "actinide",
                  
-                 "color": "#D9FFFF",
+                 "color": "#00A1FF",
                  
                  "density": 15.37,
                  
@@ -5242,7 +5242,7 @@
                  
                  "category": "actinide",
                  
-                 "color": "#D9FFFF",
+                 "color": "#008FFF",
                  
                  "density": 19.1,
                  
@@ -5304,7 +5304,7 @@
                  
                  "category": "actinide",
                  
-                 "color": "#D9FFFF",
+                 "color": "#0080FF",
                  
                  "density": 20.45,
                  
@@ -5366,7 +5366,7 @@
                  
                  "category": "actinide",
                  
-                 "color": "#D9FFFF",
+                 "color": "#006BFF",
                  
                  "density": 19.816,
                  
@@ -5428,7 +5428,7 @@
                  
                  "category": "actinide",
                  
-                 "color": "#D9FFFF",
+                 "color": "#545CF2",
                  
                  "density": 12,
                  
@@ -5490,7 +5490,7 @@
                  
                  "category": "actinide",
                  
-                 "color": "#D9FFFF",
+                 "color": "#785CE3",
                  
                  "density": 13.51,
                  
@@ -5552,7 +5552,7 @@
                  
                  "category": "actinide",
                  
-                 "color": "#D9FFFF",
+                 "color": "#8A4FE3",
                  
                  "density": 14.78,
                  
@@ -5614,7 +5614,7 @@
                  
                  "category": "actinide",
                  
-                 "color": "#D9FFFF",
+                 "color": "#A136D4",
                  
                  "density": 15.1,
                  
@@ -5676,7 +5676,7 @@
                  
                  "category": "actinide",
                  
-                 "color": "#D9FFFF",
+                 "color": "#B31FD4",
                  
                  "density": 8.84,
                  
@@ -5738,7 +5738,7 @@
                  
                  "category": "actinide",
                  
-                 "color": "#D9FFFF",
+                 "color": "#B31FBA",
                  
                  "density": null,
                  
@@ -5800,7 +5800,7 @@
                  
                  "category": "actinide",
                  
-                 "color": "#D9FFFF",
+                 "color": "#B30DA6",
                  
                  "density": null,
                  
@@ -5862,7 +5862,7 @@
                  
                  "category": "actinide",
                  
-                 "color": "#D9FFFF",
+                 "color": "#BD0D87",
                  
                  "density": null,
                  
@@ -5924,7 +5924,7 @@
                  
                  "category": "actinide",
                  
-                 "color": "#D9FFFF",
+                 "color": "#C70066",
                  
                  "density": null,
                  
@@ -5986,7 +5986,7 @@
                  
                  "category": "transition metal",
                  
-                 "color": "#D9FFFF",
+                 "color": "#CC0059",
                  
                  "density": 23.2,
                  
@@ -6048,7 +6048,7 @@
                  
                  "category": "transition metal",
                  
-                 "color": "#D9FFFF",
+                 "color": "#D1004F",
                  
                  "density": 29.3,
                  
@@ -6110,7 +6110,7 @@
                  
                  "category": "transition metal",
                  
-                 "color": "#D9FFFF",
+                 "color": "#D90045",
                  
                  "density": 35.0,
                  
@@ -6172,7 +6172,7 @@
                  
                  "category": "transition metal",
                  
-                 "color": "#D9FFFF",
+                 "color": "#E00038",
                  
                  "density": 37.1,
                  
@@ -6234,7 +6234,7 @@
                  
                  "category": "transition metal",
                  
-                 "color": "#D9FFFF",
+                 "color": "#E6002E",
                  
                  "density": 40.7,
                  
@@ -6296,7 +6296,7 @@
                  
                  "category": "unknown, probably transition metal",
                  
-                 "color": "#D9FFFF",
+                 "color": "#EB0026",
                  
                  "density": 37.4,
                  
