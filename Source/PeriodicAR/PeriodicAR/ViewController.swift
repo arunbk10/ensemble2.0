@@ -13,7 +13,12 @@ import ARKit
 class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDelegate {
     
     @IBOutlet var sceneView: ARSCNView!
-    var elementsArray: Array<City> = []
+    @IBOutlet weak var resetButton: UIButton!
+    @IBOutlet weak var convertButton: UIButton!
+    @IBOutlet weak var molecularFormulaLabel: UILabel!
+    
+    var elementsArray: Array<ElementObject> = []
+    var countDict = [String : Int]()
     
     var sessionConfiguration: ARWorldTrackingConfiguration = {
         let configuration = ARWorldTrackingConfiguration()
@@ -46,8 +51,8 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
                     
                     for i in 0...(elements.count)-1 {
                         let element = elements[i]
-                        let city = City(name: element["name"] as! String, symbol: element["symbol"] as! String, color: colorWithHexString(hex: element["color"] as! String), xPosition: element["xpos"] as! CGFloat, yPosition: element["ypos"] as! CGFloat)
-                        elementsArray.append(city)
+                        let elementObject = ElementObject(name: element["name"] as! String, symbol: element["symbol"] as! String, color: colorWithHexString(hex: element["color"] as! String), xPosition: element["xpos"] as! CGFloat, yPosition: element["ypos"] as! CGFloat)
+                        elementsArray.append(elementObject)
                     }
                 }
             } catch {
@@ -101,10 +106,12 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
         // Pause the view's session
         sceneView.session.pause()
     }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Release any cached data, images, etc that aren't in use.
+    @IBAction func resetTapped(_ sender: Any) {
+        countDict = [:]
+        molecularFormulaLabel.text = ""
+    }
+    @IBAction func convertTapped(_ sender: Any) {
+        
     }
     
     // MARK: - ARSCNViewDelegate
@@ -139,7 +146,20 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
             let hitList = sceneView.hitTest(currentLocation, options: nil)
             if let hitObject = hitList.first {
                 let node = hitObject.node
-                print(node.name ?? "")
+                if node.name == "H" {
+                    countDict.updateValue(countDict[node.name!] != nil ? countDict[node.name!]! + 1 : 1, forKey: node.name!)
+                } else if node.name == "C" {
+                    countDict.updateValue(countDict[node.name!] != nil ? countDict[node.name!]! + 1 : 1, forKey: node.name!)
+                }
+                molecularFormulaLabel.text = ""
+                
+                if let hydAtom = countDict["H"] {
+                    molecularFormulaLabel.text = "H" + "\(hydAtom)"
+                }
+                if let carbAtom = countDict["C"]{
+                    molecularFormulaLabel.text = molecularFormulaLabel.text! + "C" + "\(carbAtom)"
+                }
+                molecularFormulaLabel.isHidden = (molecularFormulaLabel.text == "") ? true : false
             }
         }
     }

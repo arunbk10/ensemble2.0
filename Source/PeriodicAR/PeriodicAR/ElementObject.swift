@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class City {
+class ElementObject {
     var name: String
     var symbol: String
     var color: UIColor
