@@ -215,10 +215,10 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
         for index in stride(from: 0, to: carbonCount, by: 1) {
             if index == 0 {
                 createChildNodes(withChildNodes: Array(repeating: ("H", selectedElementColors["H"] ?? UIColor.white, UIColor.green), count: maxHydrogenCount - bondCount), parentNodeName: "C", parentNodeColor: selectedElementColors["C"] ?? UIColor.white, parentIndex: index)
+            } else if index == (carbonCount - 1) {
+                createChildNodes(withChildNodes: Array(repeating: ("H", selectedElementColors["H"] ?? UIColor.white, UIColor.green), count: maxHydrogenCount - 1), parentNodeName: "C", parentNodeColor: selectedElementColors["C"] ?? UIColor.white, parentIndex: index)
             } else if index == 1 {
                 createChildNodes(withChildNodes: Array(repeating: ("H", selectedElementColors["H"] ?? UIColor.white, UIColor.green), count: maxHydrogenCount - bondCount - 1), parentNodeName: "C", parentNodeColor: selectedElementColors["C"] ?? UIColor.white, parentIndex: index)
-            } else if index == (carbonCount - 1) {
-                createChildNodes(withChildNodes: Array(repeating: ("H", selectedElementColors["H"] ?? UIColor.white, UIColor.green), count: maxHydrogenCount - bondCount), parentNodeName: "C", parentNodeColor: selectedElementColors["C"] ?? UIColor.white, parentIndex: index)
             } else {
                 createChildNodes(withChildNodes: Array(repeating: ("H", selectedElementColors["H"] ?? UIColor.white, UIColor.green), count: 2), parentNodeName: "C", parentNodeColor: selectedElementColors["C"] ?? UIColor.white, parentIndex: index)
             }
@@ -237,10 +237,18 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
                 updateNode(atIndex: index, endIndex: index + 1, bondColor: UIColor.green)
             } else if isAlkene(carbonCount: carbonCount, hydrogenCount: hydrogenCount) {
                 // Here it's a double bond
-                updateNode(atIndex: index, endIndex: index + 1, bondColor: UIColor.blue)
+                if index == 0 {
+                    updateNode(atIndex: index, endIndex: index + 1, bondColor: UIColor.blue)
+                } else {
+                    updateNode(atIndex: index, endIndex: index + 1, bondColor: UIColor.green)
+                }
             } else if isAlkyne(carbonCount: carbonCount, hydrogenCount: hydrogenCount) {
                 // Here it's a triple bond
-                updateNode(atIndex: index, endIndex: index + 1, bondColor: UIColor.red)
+                if index == 0 {
+                    updateNode(atIndex: index, endIndex: index + 1, bondColor: UIColor.red)
+                } else {
+                    updateNode(atIndex: index, endIndex: index + 1, bondColor: UIColor.green)
+                }
             }
         }
     }
