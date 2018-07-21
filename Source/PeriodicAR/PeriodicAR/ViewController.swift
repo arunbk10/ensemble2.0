@@ -168,6 +168,77 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
         return UIColor(red: CGFloat(r) / 255.0, green: CGFloat(g) / 255.0, blue: CGFloat(b) / 255.0, alpha: CGFloat(1))
     }
     
+    func getTripodVectors() -> [SCNMatrix4]{
+        var triPodArray :[SCNMatrix4] = []
+        var baseAngle : Float = 90
+        var count = 3
+        while count > 0 {
+            baseAngle = baseAngle + 90
+            triPodArray.append(getTransform(angle:baseAngle))
+            count = count - 1
+        }
+        return triPodArray
+    }
+    
+    func getTransform(angle:Float) -> SCNMatrix4 {
+        let distance = 0.15
+        //let distance = BearAngle.distanceTwopoints(map1: currentLocation, map2: endLocation)
+        
+        let translation = SCNMatrix4MakeTranslation(0, -0.15, Float(-distance))
+        // Rotate (yaw) around y axis
+        let rotation = SCNMatrix4MakeRotation(-1 * GLKMathDegreesToRadians(angle), 0, 1, 0)
+        
+        let transform = SCNMatrix4Mult(translation, rotation)
+        
+        return transform
+    }
+    
+    func addTwoSpheres(parentCnt:Int){
+        var parentPostions : [SCNVector3] = []
+        var parentsCount = parentCnt
+        
+        while parentsCount > 0 {
+            let firstnode = SCNNode(geometry: getSphere())
+            firstnode.light = getLight()
+            firstnode.position = SCNVector3(-0.25 * Double(parentsCount),0,-0.5)
+            parentPostions.append(firstnode.position)
+            self.sceneView.scene.rootNode.addChildNode(firstnode)
+            for childAngle in getTripodVectors() {
+                let childNode = SCNNode(geometry: getSphere())
+                childNode.light = getLight()
+                childNode.transform = childAngle
+                firstnode.addChildNode(childNode)
+                let pointTransform = childNode.worldTransform //turns the point into a point on the world grid
+                let pointVector = SCNVector3Make(pointTransform.m41, pointTransform.m42, pointTransform.m43)
+                self.sceneView.scene.rootNode.addChildNode(firstnode.position.line(to: pointVector, color: .black))
+            }
+            parentsCount = parentsCount - 1
+        }
+        
+        for (index,pos) in parentPostions.enumerated() {
+            if index + 1 != parentPostions.count {
+                self.sceneView.scene.rootNode.addChildNode(pos.line(to: parentPostions[index+1], color: .black))
+            }
+        }
+    }
+    
+    func getLight() -> SCNLight {
+        // Create shadow
+        let spotLight = SCNLight()
+        spotLight.type = .omni
+        spotLight.spotInnerAngle = 30.0
+        spotLight.spotOuterAngle = 80.0
+        return spotLight
+    }
+    
+    func getSphere() -> SCNSphere{
+        let sphere = SCNSphere(radius: 0.05)
+        sphere.firstMaterial?.diffuse.contents = UIColor.red
+        sphere.firstMaterial?.lightingModel = .constant
+        sphere.firstMaterial?.isDoubleSided = true
+        return sphere
+    }
+    
     private func didSubmit(with carbonCount: Int, hydrogenCount: Int) {
         let maxHydrogenCount = 4
         var bondCount = 0
