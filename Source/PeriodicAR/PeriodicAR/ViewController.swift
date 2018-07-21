@@ -152,7 +152,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
             cString = (cString as NSString).substring(from: 1)
         }
         
-        if (cString.characters.count != 6) {
+        if (cString.count != 6) {
             return UIColor.gray
         }
         
@@ -166,5 +166,150 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
         Scanner(string: bString).scanHexInt32(&b)
         
         return UIColor(red: CGFloat(r) / 255.0, green: CGFloat(g) / 255.0, blue: CGFloat(b) / 255.0, alpha: CGFloat(1))
+    }
+    
+    func getTripodVectors() -> [SCNMatrix4]{
+        var triPodArray :[SCNMatrix4] = []
+        var baseAngle : Float = 90
+        var count = 3
+        while count > 0 {
+            baseAngle = baseAngle + 90
+            triPodArray.append(getTransform(angle:baseAngle))
+            count = count - 1
+        }
+        return triPodArray
+    }
+    
+    func getTransform(angle:Float) -> SCNMatrix4 {
+        let distance = 0.15
+        //let distance = BearAngle.distanceTwopoints(map1: currentLocation, map2: endLocation)
+        
+        let translation = SCNMatrix4MakeTranslation(0, -0.15, Float(-distance))
+        // Rotate (yaw) around y axis
+        let rotation = SCNMatrix4MakeRotation(-1 * GLKMathDegreesToRadians(angle), 0, 1, 0)
+        
+        let transform = SCNMatrix4Mult(translation, rotation)
+        
+        return transform
+    }
+    
+    func addTwoSpheres(parentCnt:Int){
+        var parentPostions : [SCNVector3] = []
+        var parentsCount = parentCnt
+        
+        while parentsCount > 0 {
+            let firstnode = SCNNode(geometry: getSphere())
+            firstnode.light = getLight()
+            firstnode.position = SCNVector3(-0.25 * Double(parentsCount),0,-0.5)
+            parentPostions.append(firstnode.position)
+            self.sceneView.scene.rootNode.addChildNode(firstnode)
+            for childAngle in getTripodVectors() {
+                let childNode = SCNNode(geometry: getSphere())
+                childNode.light = getLight()
+                childNode.transform = childAngle
+                firstnode.addChildNode(childNode)
+                let pointTransform = childNode.worldTransform //turns the point into a point on the world grid
+                let pointVector = SCNVector3Make(pointTransform.m41, pointTransform.m42, pointTransform.m43)
+                self.sceneView.scene.rootNode.addChildNode(firstnode.position.line(to: pointVector, color: .black))
+            }
+            parentsCount = parentsCount - 1
+        }
+        
+        for (index,pos) in parentPostions.enumerated() {
+            if index + 1 != parentPostions.count {
+                self.sceneView.scene.rootNode.addChildNode(pos.line(to: parentPostions[index+1], color: .black))
+            }
+        }
+    }
+    
+    func getLight() -> SCNLight {
+        // Create shadow
+        let spotLight = SCNLight()
+        spotLight.type = .omni
+        spotLight.spotInnerAngle = 30.0
+        spotLight.spotOuterAngle = 80.0
+        return spotLight
+    }
+    
+    func getSphere() -> SCNSphere{
+        let sphere = SCNSphere(radius: 0.05)
+        sphere.firstMaterial?.diffuse.contents = UIColor.red
+        sphere.firstMaterial?.lightingModel = .constant
+        sphere.firstMaterial?.isDoubleSided = true
+        return sphere
+    }
+    
+    private func didSubmit(with carbonCount: Int, hydrogenCount: Int) {
+        let maxHydrogenCount = 4
+        var bondCount = 0
+        if isAlkane(carbonCount: carbonCount, hydrogenCount: hydrogenCount) {
+            // Here it's is a single bond
+            bondCount = 1
+        } else if isAlkene(carbonCount: carbonCount, hydrogenCount: hydrogenCount) {
+            // Here it's a double bond
+            bondCount = 2
+        } else if isAlkyne(carbonCount: carbonCount, hydrogenCount: hydrogenCount) {
+            // Here it's a triple bond
+            bondCount = 3
+        } else {
+            print("Invalid strings")
+            return
+        }
+        
+        createParentNodes(withNodeCount: carbonCount)
+        for index in stride(from: 0, to: carbonCount, by: 1) {
+            if index == 0 {
+                createChildNodes(withNodeCount: maxHydrogenCount - bondCount, parentNodeIndex: index)
+            } else if index == 1 {
+                createChildNodes(withNodeCount: maxHydrogenCount - bondCount - 1, parentNodeIndex: index)
+            } else if index == (carbonCount - 1) {
+                createChildNodes(withNodeCount: maxHydrogenCount - bondCount, parentNodeIndex: index)
+            } else {
+                createChildNodes(withNodeCount: 2, parentNodeIndex: index)
+            }
+        }
+    }
+    
+    private func createParentNodes(withNodeCount nodeCount: Int) {
+        for index in stride(from: 0, to: nodeCount - 1, by: 1) {
+            // FIXME:
+            let carbonCount = 4
+            let hydrogenCount = 4
+            if isAlkane(carbonCount: carbonCount, hydrogenCount: hydrogenCount) {
+                // Here it's is a single bond
+                addNode(atIndex: index, endIndex: index + 1, bondColor: UIColor.green)
+            } else if isAlkene(carbonCount: carbonCount, hydrogenCount: hydrogenCount) {
+                // Here it's a double bond
+                addNode(atIndex: index, endIndex: index + 1, bondColor: UIColor.blue)
+            } else if isAlkyne(carbonCount: carbonCount, hydrogenCount: hydrogenCount) {
+                // Here it's a triple bond
+                addNode(atIndex: index, endIndex: index + 1, bondColor: UIColor.red)
+            }
+        }
+    }
+    
+    private func createChildNodes(withNodeCount nodeCount: Int, parentNodeIndex: Int) {
+        // FIXME:
+    }
+    
+    private func addNode(atIndex startIndex: Int, endIndex: Int, bondColor: UIColor) {
+        // FIXME:
+    }
+}
+
+extension ViewController {
+    func isAlkane(carbonCount: Int, hydrogenCount: Int) -> Bool {
+        // 2n+2 for alkane
+        return (hydrogenCount == (2 * carbonCount + 2))
+    }
+    
+    func isAlkene(carbonCount: Int, hydrogenCount: Int) -> Bool {
+        // 2n for alkene
+        return (hydrogenCount == (2 * carbonCount))
+    }
+    
+    func isAlkyne(carbonCount: Int, hydrogenCount: Int) -> Bool {
+        // 2n-2 for alkyne
+        return (hydrogenCount == (2 * carbonCount - 2))
     }
 }
