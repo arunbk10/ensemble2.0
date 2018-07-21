@@ -28,7 +28,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
     }()
     
     private var selectedElementColors: [String: UIColor] = [:]
-    
+    var parentPostions : [SCNVector3] = []
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -40,7 +40,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
         sceneView.scene.physicsWorld.contactDelegate = self
         // Set the view's delegate
         sceneView.delegate = self
-
+        
         
         // Show statistics such as fps and timing information
         sceneView.showsStatistics = true
@@ -61,6 +61,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
                 print(error)
             }
         }
+        // addpheres(parentCnt: 3)
     }
     
     func createTable() {
@@ -84,7 +85,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
             tagNode.position =  SCNVector3Make((boxNode.position.x - Float((box.width/2) - 0.25)), boxNode.position.y - 0.25 - Float(box.height),boxNode.position.z)
             
             self.sceneView.scene.rootNode.addChildNode(tagNode)
-
+            
         }
     }
     
@@ -113,7 +114,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
         molecularFormulaLabel.text = ""
     }
     @IBAction func convertTapped(_ sender: Any) {
-        
+        didSubmit(with: countDict["C"] ?? 0, hydrogenCount: countDict["H"] ?? 0)
     }
     
     // MARK: - ARSCNViewDelegate
@@ -153,14 +154,17 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
                 } else if node.name == "C" {
                     countDict.updateValue(countDict[node.name!] != nil ? countDict[node.name!]! + 1 : 1, forKey: node.name!)
                 }
-                molecularFormulaLabel.text = ""
+                var molecularText = ""
+                if let carbAtom = countDict["C"]{
+                    molecularText = "C" + "\(carbAtom)"
+                }
                 
                 if let hydAtom = countDict["H"] {
-                    molecularFormulaLabel.text = "H" + "\(hydAtom)"
+                    molecularText += "H" + "\(hydAtom)"
                 }
-                if let carbAtom = countDict["C"]{
-                    molecularFormulaLabel.text = molecularFormulaLabel.text! + "C" + "\(carbAtom)"
-                }
+                
+                molecularFormulaLabel.text = molecularText
+               
                 molecularFormulaLabel.isHidden = (molecularFormulaLabel.text == "") ? true : false
                 selectedElementColors[node.name ?? ""] = (node.geometry?.materials.first?.diffuse.contents as? UIColor ?? .white)
             }
@@ -210,13 +214,13 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
         
         for index in stride(from: 0, to: carbonCount, by: 1) {
             if index == 0 {
-                createChildNodes(withChildNodes: Array(repeating: ("H", selectedElementColors["H"] ?? UIColor.white, UIColor.green), count: maxHydrogenCount - bondCount), parentNodeName: "C", parentNodeColor: selectedElementColors["C"] ?? UIColor.white)
+                createChildNodes(withChildNodes: Array(repeating: ("H", selectedElementColors["H"] ?? UIColor.white, UIColor.green), count: maxHydrogenCount - bondCount), parentNodeName: "C", parentNodeColor: selectedElementColors["C"] ?? UIColor.white, parentIndex: index)
             } else if index == 1 {
-                createChildNodes(withChildNodes: Array(repeating: ("H", selectedElementColors["H"] ?? UIColor.white, UIColor.green), count: maxHydrogenCount - bondCount - 1), parentNodeName: "C", parentNodeColor: selectedElementColors["C"] ?? UIColor.white)
+                createChildNodes(withChildNodes: Array(repeating: ("H", selectedElementColors["H"] ?? UIColor.white, UIColor.green), count: maxHydrogenCount - bondCount - 1), parentNodeName: "C", parentNodeColor: selectedElementColors["C"] ?? UIColor.white, parentIndex: index)
             } else if index == (carbonCount - 1) {
-                createChildNodes(withChildNodes: Array(repeating: ("H", selectedElementColors["H"] ?? UIColor.white, UIColor.green), count: maxHydrogenCount - bondCount), parentNodeName: "C", parentNodeColor: selectedElementColors["C"] ?? UIColor.white)
+                createChildNodes(withChildNodes: Array(repeating: ("H", selectedElementColors["H"] ?? UIColor.white, UIColor.green), count: maxHydrogenCount - bondCount), parentNodeName: "C", parentNodeColor: selectedElementColors["C"] ?? UIColor.white, parentIndex: index)
             } else {
-                createChildNodes(withChildNodes: Array(repeating: ("H", selectedElementColors["H"] ?? UIColor.white, UIColor.green), count: 2), parentNodeName: "C", parentNodeColor: selectedElementColors["C"] ?? UIColor.white)
+                createChildNodes(withChildNodes: Array(repeating: ("H", selectedElementColors["H"] ?? UIColor.white, UIColor.green), count: 2), parentNodeName: "C", parentNodeColor: selectedElementColors["C"] ?? UIColor.white, parentIndex: index)
             }
         }
         
@@ -225,9 +229,9 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
     
     private func updateParentNodes(withNodeCount nodeCount: Int) {
         for index in stride(from: 0, to: nodeCount - 1, by: 1) {
-            // FIXME:
-            let carbonCount = 4
-            let hydrogenCount = 4
+            
+            let carbonCount = countDict["C"] ?? 0
+            let hydrogenCount = countDict["H"] ?? 0
             if isAlkane(carbonCount: carbonCount, hydrogenCount: hydrogenCount) {
                 // Here it's is a single bond
                 updateNode(atIndex: index, endIndex: index + 1, bondColor: UIColor.green)
@@ -241,12 +245,15 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
         }
     }
     
-    private func createChildNodes(withChildNodes nodes: [(nodeName: String?, nodeColor: UIColor, bondColor: UIColor)], parentNodeName: String?, parentNodeColor: UIColor) {
-        // FIXME:
+    private func createChildNodes(withChildNodes nodes: [(nodeName: String?, nodeColor: UIColor, bondColor: UIColor)], parentNodeName: String?, parentNodeColor: UIColor,parentIndex:Int) {
+        addSpheres(withChildNodes: nodes, parentNodeName: parentNodeName, parentNodeColor: parentNodeColor, parentIndex: parentIndex)
     }
     
     private func updateNode(atIndex startIndex: Int, endIndex: Int, bondColor: UIColor) {
-        // FIXME:
+    
+                let linenode = Cylinder(startPoint:parentPostions[startIndex], endPoint: parentPostions[endIndex], radius: 0.2, radSegmentCount: 0, color: bondColor)
+                self.sceneView.scene.rootNode.addChildNode(linenode)
+       
     }
 }
 
@@ -268,16 +275,18 @@ extension ViewController {
 }
 
 extension ViewController {
-    func getTripodVectors() -> [SCNMatrix4]{
-        var triPodArray :[SCNMatrix4] = []
-        var baseAngle : Float = 90
-        var count = 3
+    
+    func getChildVectors(childCount:Int) -> [SCNMatrix4]{
+        var childAngles :[SCNMatrix4] = []
+        let kDefaultAngle =  Float(360 / childCount)
+        var baseAngle : Float = kDefaultAngle
+        var count = childCount
         while count > 0 {
-            baseAngle = baseAngle + 90
-            triPodArray.append(getTransform(angle:baseAngle))
+            baseAngle = baseAngle + kDefaultAngle
+            childAngles.append(getTransform(angle:baseAngle))
             count = count - 1
         }
-        return triPodArray
+        return childAngles
     }
     
     func getTransform(angle:Float) -> SCNMatrix4 {
@@ -292,34 +301,38 @@ extension ViewController {
         
         return transform
     }
-    
-    func addpheres(parentCnt: Int){
-        var parentPostions : [SCNVector3] = []
-        var parentsCount = parentCnt
+    func getTextNode(text:String,pos : SCNVector3) -> SCNNode {
+        let textBlock = SCNText(string: text, extrusionDepth: 0.1)
+        textBlock.font = UIFont(name: "Optima", size: 0.05)
+        //textBlock.flatness = -2.0
+        textBlock.firstMaterial?.diffuse.contents = UIImage(named: "texture.png") //UIColor.white
+        textBlock.alignmentMode = kCAAlignmentCenter
+        let textNode = SCNNode(geometry: textBlock)
+        textNode.position = pos //SCNVector3(0,-0.01,0)
+        //textNode.scale = SCNVector3Make( 0.2, 0.2, 0.2);
+        return textNode
+    }
+    func addSpheres(withChildNodes nodes: [(nodeName: String?, nodeColor: UIColor, bondColor: UIColor)], parentNodeName: String?, parentNodeColor: UIColor,parentIndex:Int){
         
-        while parentsCount > 0 {
-            let firstnode = SCNNode(geometry: getSphere())
-            firstnode.light = getLight()
-            firstnode.position = SCNVector3(-0.25 * Double(parentsCount),0,-0.5)
-            parentPostions.append(firstnode.position)
-            self.sceneView.scene.rootNode.addChildNode(firstnode)
-            for childAngle in getTripodVectors() {
-                let childNode = SCNNode(geometry: getSphere())
-                childNode.light = getLight()
-                childNode.transform = childAngle
-                firstnode.addChildNode(childNode)
-                let pointTransform = childNode.worldTransform //turns the point into a point on the world grid
-                let pointVector = SCNVector3Make(pointTransform.m41, pointTransform.m42, pointTransform.m43)
-                self.sceneView.scene.rootNode.addChildNode(firstnode.position.line(to: pointVector, color: .black))
-            }
-            parentsCount = parentsCount - 1
+        let firstnode = SCNNode(geometry: getSphere(text: parentNodeName ?? "", color: parentNodeColor))
+        firstnode.light = getLight()
+        firstnode.position = SCNVector3(-0.25 * Double(parentIndex),0,-0.5)
+        parentPostions.append(firstnode.position)
+        self.sceneView.scene.rootNode.addChildNode(firstnode)
+        // firstnode.addChildNode(getTextNode(text: "C", pos: firstnode.position))
+        for (index , childAngle) in getChildVectors(childCount: nodes.count).enumerated() {
+            let childNode = SCNNode(geometry: getSphere(text: nodes[index].nodeName ?? "", color: nodes[index].nodeColor))
+            childNode.light = getLight()
+            childNode.transform = childAngle
+            firstnode.addChildNode(childNode)
+            let pointTransform = childNode.worldTransform //turns the point into a point on the world grid
+            let pointVector = SCNVector3Make(pointTransform.m41, pointTransform.m42, pointTransform.m43)
+            //   this is used for single line             self.sceneView.scene.rootNode.addChildNode(firstnode.position.line(to: pointVector, color: .black))
+            let linenode = Cylinder(startPoint:firstnode.position, endPoint: pointVector, radius: 0.2, radSegmentCount: 0, color: nodes[index].bondColor)
+            self.sceneView.scene.rootNode.addChildNode(linenode)
+            //  childNode.addChildNode(getTextNode(text: "H", pos: childNode.position))
         }
-        
-        for (index,pos) in parentPostions.enumerated() {
-            if index + 1 != parentPostions.count {
-                self.sceneView.scene.rootNode.addChildNode(pos.line(to: parentPostions[index+1], color: .black))
-            }
-        }
+
     }
     
     func getLight() -> SCNLight {
@@ -331,11 +344,49 @@ extension ViewController {
         return spotLight
     }
     
-    func getSphere() -> SCNSphere{
+    func getSphere(text: String,color:UIColor) -> SCNSphere{
         let sphere = SCNSphere(radius: 0.05)
-        sphere.firstMaterial?.diffuse.contents = UIColor.red
-        sphere.firstMaterial?.lightingModel = .constant
-        sphere.firstMaterial?.isDoubleSided = true
+        // sphere.firstMaterial?.diffuse.contents = UIColor.red
+        let firstmat = SCNMaterial()
+        firstmat.diffuse.contents = createSnapshotView(text:text,color: color)
+        firstmat.lightingModel = .constant
+        firstmat.isDoubleSided = true
+        let secondMat = SCNMaterial()
+        secondMat.diffuse.contents = createSnapshotView(text:text,color: color)
+        secondMat.lightingModel = .constant
+        secondMat.isDoubleSided = true
+        
+        sphere.materials = [firstmat,secondMat]
+        //        sphere.firstMaterial?.diffuse.contents =  // UIImage(named: <#T##String#>//
+        //        sphere.firstMaterial?.lightingModel = .constant
+        //        sphere.firstMaterial?.isDoubleSided = true
         return sphere
+    }
+    func createSnapshotView(text:String,color:UIColor) -> UIImage {
+        let rect = CGRect(x: 0, y: 0, width: 300, height: 300)
+        let snapView  = UIView(frame: rect)
+        snapView.backgroundColor = color
+        let textRect = CGRect(x:0, y: 0, width: 150, height: 300)
+        let seclabel = UILabel(frame:  CGRect(x: 150, y: 0, width: 150, height: 300))
+        seclabel.textAlignment = .center
+        seclabel.font = UIFont(name: "Optima", size: 35.0)
+        seclabel.text = text
+        let label = UILabel(frame: textRect)
+        label.textAlignment = .center
+        label.font = UIFont(name: "Optima", size: 35.0)
+        label.text = text
+        snapView.addSubview(label)
+        snapView.addSubview(seclabel)
+        return snapView.snapshotImage()
+    }
+}
+extension UIView{
+    func snapshotImage(afterScreenUpdates: Bool = true) -> UIImage {
+        
+        UIGraphicsBeginImageContextWithOptions(self.bounds.size, false, UIScreen.main.scale)
+        self.drawHierarchy(in: self.frame, afterScreenUpdates: afterScreenUpdates)
+        let snapShotImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return snapShotImage ?? UIImage()
     }
 }
