@@ -201,6 +201,10 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
         if isAlkane(carbonCount: carbonCount, hydrogenCount: hydrogenCount) {
             // Here it's is a single bond
             bondCount = 1
+            
+            if carbonCount == 1 {
+                bondCount = 0
+            }
         } else if isAlkene(carbonCount: carbonCount, hydrogenCount: hydrogenCount) {
             // Here it's a double bond
             bondCount = 2
