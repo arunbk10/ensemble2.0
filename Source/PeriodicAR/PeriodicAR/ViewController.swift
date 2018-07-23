@@ -63,7 +63,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
     func createTable() {
         
         for i in 0...(elementsArray.count - 1)  {
-            let box = SCNBox(width: 1, height: 1, length: 0.02, chamferRadius: 0.5)
+            let box = SCNBox(width: 1, height: 1, length: 0.5, chamferRadius: 0.5)
             let rectangleMaterial = SCNMaterial()
             rectangleMaterial.diffuse.contents = elementsArray[i].color
             box.materials = [rectangleMaterial]
@@ -78,11 +78,11 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
             sceneView.scene.rootNode.addChildNode(boxNode)
             
             
-            let tag = SCNText(string: elementsArray[i].symbol, extrusionDepth: 0.1)
+            let tag = SCNText(string: elementsArray[i].symbol, extrusionDepth: 0.01)
             tag.firstMaterial?.diffuse.contents = UIColor.black
-            tag.font = UIFont(name: "Optima", size: 0.5)
+            tag.font = UIFont(name: "Optima", size: 0.3)
             let tagNode = SCNNode(geometry: tag)
-            tagNode.position =  SCNVector3Make((boxNode.position.x - Float((box.width/2) - 0.25)), boxNode.position.y - 0.25 - Float(box.height),boxNode.position.z)
+            tagNode.position =  SCNVector3Make((boxNode.position.x - Float((box.width/2.5) - 0.30)), boxNode.position.y - 0.12 - Float(box.height - 0.05),boxNode.position.z + 0.3)
             
             self.sceneView.scene.rootNode.addChildNode(tagNode)
             
@@ -117,7 +117,10 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
             if let nodes = sceneView.scene.rootNode.childNode(withName: "ParentNode + \(index)", recursively: false){
                 nodes.removeFromParentNode()
             }
+            
+            
         }
+    
         self.sceneView.scene.rootNode.enumerateChildNodes { (node, _) in
             if node.name == "LineNode" {
                 node.removeFromParentNode()
@@ -287,7 +290,6 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
     private func updateNode(atIndex startIndex: Int, endIndex: Int, bondColor: UIColor) {
     
                 let linenode = Cylinder(startPoint:parentPostions[startIndex], endPoint: parentPostions[endIndex], radius: 0.2, radSegmentCount: 0, color: bondColor)
-                linenode.name = "Linenode"
                 self.sceneView.scene.rootNode.addChildNode(linenode)
        
     }
@@ -346,15 +348,14 @@ extension ViewController {
         textBlock.firstMaterial?.diffuse.contents = UIImage(named: "texture.png") //UIColor.white
         textBlock.alignmentMode = kCAAlignmentCenter
         let textNode = SCNNode(geometry: textBlock)
-        textNode.position = pos //SCNVector3(0,-0.01,0)
-        //textNode.scale = SCNVector3Make( 0.2, 0.2, 0.2);
+        textNode.position = pos
         return textNode
     }
     func addSpheres(withChildNodes nodes: [(nodeName: String?, nodeColor: UIColor, bondColor: UIColor)], parentNodeName: String?, parentNodeColor: UIColor,parentIndex:Int){
         
         let firstnode = SCNNode(geometry: getSphere(text: parentNodeName ?? "", color: parentNodeColor))
         firstnode.name = "ParentNode + \(parentIndex)"
-        firstnode.position = SCNVector3(-1.0 * Double(parentIndex+1),0,-0.5)
+        firstnode.position = SCNVector3(-0.35 * Double(parentIndex+1),0,-0.5)
         parentPostions.append(firstnode.position)
         self.sceneView.scene.rootNode.addChildNode(firstnode)
         // firstnode.addChildNode(getTextNode(text: "C", pos: firstnode.position))
@@ -366,7 +367,6 @@ extension ViewController {
             let pointVector = SCNVector3Make(pointTransform.m41, pointTransform.m42, pointTransform.m43)
             //   this is used for single line             self.sceneView.scene.rootNode.addChildNode(firstnode.position.line(to: pointVector, color: .black))
             let linenode = Cylinder(startPoint:firstnode.position, endPoint: pointVector, radius: 0.2, radSegmentCount: 0, color: nodes[index].bondColor)
-            linenode.name = "LineNode"
             self.sceneView.scene.rootNode.addChildNode(linenode)
             //  childNode.addChildNode(getTextNode(text: "H", pos: childNode.position))
         }
@@ -376,7 +376,7 @@ extension ViewController {
     func getLight() -> SCNLight {
         // Create shadow
         let spotLight = SCNLight()
-        spotLight.type = .omni
+        spotLight.type = .directional
         spotLight.spotInnerAngle = 30.0
         spotLight.spotOuterAngle = 80.0
         return spotLight
